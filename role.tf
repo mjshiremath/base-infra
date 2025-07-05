@@ -20,3 +20,13 @@ resource "aws_iam_role_policy_attachment" "ecr_push_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
 }
 
+# ECR Repository for saving images
+resource "aws_ecr_repository" "app_repo" {
+  name = "app-image-repo"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  tags = {
+    Name = "app-image-repo"
+  }
+}
