@@ -37,7 +37,11 @@ jobs:
           terraform_version: 1.8.5
 
       - name: Terraform Init
-        run: terraform init
+        run: |
+          pwd
+          ls -la
+          terraform init
+
 
       - name: Terraform Validate
         run: terraform validate
