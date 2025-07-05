@@ -11,6 +11,11 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      destroy:
+        description: 'Set to true to run terraform destroy'
+        required: false
+        default: 'false'
 
 jobs:
   terraform:
@@ -58,6 +63,10 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
+        run: terraform destroy -auto-approve
 
   # build-and-push-image:
   #   name: 'Build and Push Docker Image to ECR'
