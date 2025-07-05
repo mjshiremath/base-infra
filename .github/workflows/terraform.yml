@@ -31,6 +31,12 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
           echo "AWS_REGION=us-east-1" >> $GITHUB_ENV
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # or whatever version your project requires
+
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
