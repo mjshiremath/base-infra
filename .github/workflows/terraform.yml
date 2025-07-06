@@ -21,10 +21,6 @@ jobs:
   terraform:
     name: 'Terraform Apply'
     runs-on: self-hosted
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: us-east-1
     environment: production
     permissions:
       id-token: write
@@ -38,6 +34,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'  # or whatever version your project requires
+
+      - name: Set up AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          echo "AWS_ACCESS_KEY_ID set: $AWS_ACCESS_KEY_ID"
+          # Export for subsequent steps in this job
+          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+          echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN" >> $GITHUB_ENV
 
 
       - name: Setup Terraform
