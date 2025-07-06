@@ -91,9 +91,7 @@ jobs:
     runs-on: self-hosted
     needs: terraform
     environment: production
-    permissions:
-      id-token: write
-      contents: read
+    if: github.event.inputs.approval == 'true'
 
     steps:
       - name: Checkout code
@@ -119,18 +117,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.8.5
-
-      - name: Download plan and state artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: tf-artifacts
-          path: .
-
-      - name: Move state files to working directory (for destroy)
-        run: |
-          if [ -d tf-artifacts ]; then
-            mv tf-artifacts/terraform.tfstate* . || true
-          fi
 
       - name: Terraform Init
         run: terraform init
