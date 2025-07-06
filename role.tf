@@ -30,3 +30,12 @@ resource "aws_ecr_repository" "app_repo" {
     Name = "app-image-repo"
   }
 }
+
+
+output "ecr_repository_url" {
+  value = aws_ecr_repository.app_repo.repository_url
+}
+
+output "ecr_role" {
+  value = aws_iam_role.ecr_push_role.arn
+}
