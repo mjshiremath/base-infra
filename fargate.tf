@@ -22,12 +22,13 @@ resource "aws_iam_role_policy_attachment" "fargate_pod_execution_role_policy" {
 }
 
 # EKS Cluster
-resource "aws_eks_cluster" "fargate_eks" {
+resource "aws_eks_cluster" "atlanta_fargate_eks" {
   name     = "fargate-eks-cluster"
   role_arn = aws_iam_role.fargate_pod_execution_role.arn
   vpc_config {
     subnet_ids = [
-      aws_subnet.eks_private_subnet_a.id
+      aws_subnet.eks_private_subnet_a.id,
+      aws_subnet.eks_private_subnet_b.id
     ]
   }
   depends_on = [aws_iam_role_policy_attachment.fargate_pod_execution_role_policy]
@@ -35,11 +36,12 @@ resource "aws_eks_cluster" "fargate_eks" {
 
 # EKS Fargate Profile
 resource "aws_eks_fargate_profile" "default" {
-  cluster_name           = aws_eks_cluster.fargate_eks.name
+  cluster_name           = aws_eks_cluster.atlanta_fargate_eks.name
   fargate_profile_name   = "default"
   pod_execution_role_arn = aws_iam_role.fargate_pod_execution_role.arn
   subnet_ids             = [
-    aws_subnet.eks_private_subnet_a.id
+    aws_subnet.eks_private_subnet_a.id,
+    aws_subnet.eks_private_subnet_b.id
   ]
   selector {
     namespace = "default"
