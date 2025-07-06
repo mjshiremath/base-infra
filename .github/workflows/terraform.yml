@@ -64,15 +64,24 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -out=tfplan
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve
+      - name: Upload plan and state as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tf-artifacts
+          path: |
+            terraform.tfstate
+            terraform.tfstate.backup
+            tfplan
 
-      - name: Terraform Destroy
+      - name: Download plan and state artifacts
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
-        run: terraform destroy -auto-approve
+        uses: actions/download-artifact@v4
+        with:
+          name: tf-artifacts
+
+
 
   # build-and-push-image:
   #   name: 'Build and Push Docker Image to ECR'
