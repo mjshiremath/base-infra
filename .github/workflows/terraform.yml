@@ -75,17 +75,21 @@ jobs:
             terraform.tfstate.backup
             tfplan
 
+
       - name: Download plan and state artifacts
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
         uses: actions/download-artifact@v4
         with:
           name: tf-artifacts
 
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+
   destroy:
     name: 'Terraform Destroy'
     runs-on: self-hosted
     needs: terraform
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.destroy == 'true'
     environment: production
     permissions:
       id-token: write
@@ -133,7 +137,7 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
-        
+
   # build-and-push-image:
   #   name: 'Build and Push Docker Image to ECR'
   #   runs-on: ubuntu-latest
