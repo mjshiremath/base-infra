@@ -137,7 +137,7 @@ variable "enable_coredns_addon" {
 variable "coredns_addon_version" {
   description = "Version of CoreDNS addon"
   type        = string
-  default     = "v1.12.1-eksbuild.2"
+  default     = "v1.10.1-eksbuild.1"
 }
 
 variable "enable_vpc_cni_addon" {

@@ -159,7 +159,7 @@ variable "enable_vpc_cni_addon" {
 variable "vpc_cni_addon_version" {
   description = "Version of the VPC CNI add-on"
   type        = string
-  default     = "v1.16.0-eksbuild.1"
+  default     = "v1.18.0-eksbuild.1"
 }
 
 variable "enable_coredns_addon" {
@@ -183,7 +183,7 @@ variable "enable_kube_proxy_addon" {
 variable "kube_proxy_addon_version" {
   description = "Version of the kube-proxy add-on"
   type        = string
-  default     = "v1.28.1-eksbuild.1"
+  default     = "v1.33.0-eksbuild.1"
 }
 
 variable "enable_ebs_csi_driver_addon" {
