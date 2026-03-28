@@ -24,3 +24,6 @@ requirements.txt
 # Example files
 *-example.tf
 for_each-*.tf
+
+# Credential/import scripts - NEVER commit these
+import_resources*.sh
