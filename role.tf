@@ -1,41 +1,6 @@
+# IAM roles for EKS cluster, node groups, and Fargate profiles are created and managed
+# by the modules/eks module. This file is reserved for any additional custom IAM roles
+# needed for your applications or other infrastructure components.
 
-# IAM role for pushing to ECR
-data "aws_iam_policy_document" "ecr_assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
-
-resource "aws_iam_role" "ecr_push_role" {
-  name               = "ecr-push-role"
-  assume_role_policy = data.aws_iam_policy_document.ecr_assume_role_policy.json
-}
-
-resource "aws_iam_role_policy_attachment" "ecr_push_policy" {
-  role       = aws_iam_role.ecr_push_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
-}
-
-# ECR Repository for saving images
-resource "aws_ecr_repository" "app_repo" {
-  name = "app-image-repo"
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-  tags = {
-    Name = "app-image-repo"
-  }
-}
-
-
-output "ecr_repository_url" {
-  value = aws_ecr_repository.app_repo.repository_url
-}
-
-output "ecr_role" {
-  value = aws_iam_role.ecr_push_role.arn
-}
+# Example: If you need custom application roles, they can be defined here.
+# For now, all EKS-related IAM roles are created by the eks module.
