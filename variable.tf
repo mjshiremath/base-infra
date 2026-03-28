@@ -75,7 +75,45 @@ variable "kubernetes_version" {
 variable "create_node_group" {
   description = "Whether to create an EKS node group (false for Fargate-only)"
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "node_group_name" {
+  description = "Name of the EKS node group"
+  type        = string
+  default     = "system-node-group"
+}
+
+variable "node_group_desired_size" {
+  description = "Desired number of nodes in the node group"
+  type        = number
+  default     = 1
+}
+
+variable "node_group_min_size" {
+  description = "Minimum number of nodes in the node group"
+  type        = number
+  default     = 1
+}
+
+variable "node_group_max_size" {
+  description = "Maximum number of nodes in the node group"
+  type        = number
+  default     = 3
+}
+
+variable "node_group_instance_types" {
+  description = "List of instance types for the node group"
+  type        = list(string)
+  default     = ["t3.small"]
+}
+
+variable "node_group_labels" {
+  description = "Kubernetes labels for the node group"
+  type        = map(string)
+  default = {
+    "workload-type" = "system"
+  }
 }
 
 variable "create_fargate_profile" {

@@ -7,6 +7,13 @@ module "eks" {
   endpoint_private_access     = true
   endpoint_public_access      = true
   create_node_group           = var.create_node_group
+  node_group_name             = var.node_group_name
+  node_group_subnet_ids       = module.network.private_subnet_ids
+  node_group_desired_size     = var.node_group_desired_size
+  node_group_min_size         = var.node_group_min_size
+  node_group_max_size         = var.node_group_max_size
+  node_group_instance_types   = var.node_group_instance_types
+  node_group_labels           = var.node_group_labels
   create_fargate_profile      = var.create_fargate_profile
   fargate_profile_name        = var.fargate_profile_name
   fargate_profile_subnet_ids  = module.network.private_subnet_ids
