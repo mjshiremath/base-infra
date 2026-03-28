@@ -14,7 +14,7 @@ variable "vpc_name" {
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "172.16.0.0/16"
 }
 
 variable "availability_zones" {
@@ -26,13 +26,13 @@ variable "availability_zones" {
 variable "public_subnet_cidr_blocks" {
   description = "List of CIDR blocks for public subnets"
   type        = list(string)
-  default     = ["10.0.0.0/24", "10.0.1.0/24"]
+  default     = ["172.16.0.0/24", "172.16.1.0/24"]
 }
 
 variable "private_subnet_cidr_blocks" {
   description = "List of CIDR blocks for private subnets"
   type        = list(string)
-  default     = ["10.0.10.0/24", "10.0.11.0/24"]
+  default     = ["172.16.10.0/24", "172.16.11.0/24"]
 }
 
 variable "enable_dns_hostnames" {
@@ -158,5 +158,6 @@ variable "common_tags" {
   default = {
     Environment = "dev"
     ManagedBy   = "Terraform"
+    created_by  = "27925"
   }
 }

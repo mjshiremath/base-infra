@@ -4,6 +4,10 @@
 .terraform/
 .terraform.lock.hcl
 
+# Terragrunt cache
+.terragrunt-cache/
+**/.terragrunt-cache/
+
 # IDE
 .idea/
 
