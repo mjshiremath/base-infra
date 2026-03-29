@@ -1,4 +1,4 @@
-.PHONY: help plan apply destroy validate format init clean
+.PHONY: help plan apply destroy validate format init clean validate-network validate-eks
 
 TERRAGRUNT_DIR := terragrunt/dev
 NETWORK_DIR := $(TERRAGRUNT_DIR)/network
@@ -58,6 +58,12 @@ destroy-eks:
 # Validate targets
 validate-all:
 	cd $(TERRAGRUNT_DIR) && terragrunt validate
+
+validate-network:
+	cd $(NETWORK_DIR) && terragrunt validate
+
+validate-eks:
+	cd $(EKS_DIR) && terragrunt validate
 
 # Format targets
 format-all:
