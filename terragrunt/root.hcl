@@ -15,10 +15,13 @@ inputs = {
 
 # Remote state configuration
 remote_state {
-  backend = "local"
+  backend = "s3"
 
   config = {
-    path = "${get_terragrunt_dir()}/../../../terraform.tfstate"
+    bucket = "practice-eks-state"
+    key    = "${path_relative_to_include()}/terraform.tfstate"
+    region = "us-east-1"
+    encrypt = true
   }
 
   generate = {
