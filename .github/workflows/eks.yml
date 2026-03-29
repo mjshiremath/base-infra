@@ -18,6 +18,7 @@ jobs:
   validate:
     name: Validate Configuration
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       id-token: write
       contents: read
